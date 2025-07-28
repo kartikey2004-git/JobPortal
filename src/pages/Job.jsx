@@ -54,7 +54,7 @@ const JobPage = () => {
   return (
     <div className="flex flex-col gap-8 mt-5 p-4 sm:p-6">
       <div className="flex flex-col-reverse gap-6 md:flex-row justify-between items-center">
-        <h1 className="gradient-title font-extrabold pb-3 text-3xl sm:text-5xl md:text-6xl">
+        <h1 className="gradient-title  pb-3 text-2xl sm:text-4xl md:text-5xl">
           {job?.title}
         </h1>
         <img
@@ -111,10 +111,10 @@ const JobPage = () => {
         </Select>
       )}
 
-      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">About the job</h2>
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">About the job</h2>
       <p className="text-sm sm:text-lg">{job?.description}</p>
 
-      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">What we are looking for</h2>
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">What we are looking for</h2>
       <MDEditor.Markdown
         source={job?.requirements}
         className="bg-transparent text-sm sm:text-lg"

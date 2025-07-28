@@ -89,7 +89,7 @@ const PostJob = () => {
 
   return (
     <div>
-      <h1 className="gradient-title font-extrabold text-5xl sm:text-7xl text-center pb-8">
+      <h1 className="gradient-title  text-4xl sm:text-6xl text-center pb-8">
         Post a Job
       </h1>
 
@@ -171,7 +171,7 @@ const PostJob = () => {
           name="requirements"
           control={control}
           render={({ field }) => (
-            <MDEditor value={field.value} onChange={field.onChange} />
+            <MDEditor value={field.value} onChange={field.onChange} className="bg-gray-900"/>
           )}
         />
 

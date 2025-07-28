@@ -33,7 +33,9 @@ const Header = () => {
     <>
       <nav className="py-4 flex justify-between items-center">
         <Link>
-          <img src="/Logo.png" alt="Logo" className="h-20" />
+          <h1 className="text-2xl md:text-3xl text-white cursor-pointer">
+            JobConnect
+          </h1>
         </Link>
         <div className="flex gap-8">
           <SignedOut>

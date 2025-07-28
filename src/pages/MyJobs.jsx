@@ -12,19 +12,23 @@ const MyJobs = () => {
 
   return (
     <div>
-      <h1 className="gradient-title font-extrabold text-5xl sm:text-7xl text-center pb-8">
+      <h1 className="gradient-title text-4xl sm:text-6xl text-center pb-8">
         {user?.unsafeMetadata?.role === "candidate"
           ? "My Applications"
           : "My Jobs"}
       </h1>
 
       {user?.unsafeMetadata?.role === "candidate" ? (
-        <CreatedApplications />
+        <div className="mt-8">
+          <CreatedApplications />
+        </div>
       ) : (
-        <CreatedJobs />
+        <div className="mt-8">
+          <CreatedJobs />
+        </div>
       )}
     </div>
   );
 };
 
-export default MyJobs
+export default MyJobs;

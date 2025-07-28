@@ -38,7 +38,7 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
   };
 
   return (
-    <Card className="w-full md:w-96 mx-auto">
+    <Card className="w-full md:max-w-xl mx-auto flex flex-col rounded-xl">
       {loadingHiringStatus && <BarLoader width={"100%"} color="#36d7b7" />}
       <CardHeader>
         <CardTitle className="flex justify-between items-center font-bold">

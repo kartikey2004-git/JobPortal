@@ -7,28 +7,28 @@ import { BarLoader } from "react-spinners";
 import JobCard from "./JobCard";
 
 const CreatedJobs = () => {
-
-  const {user} = useUser()
+  const { user } = useUser();
 
   const {
     data: createdJobs,
     fn: fnCreatedJobs,
     loading: loadingCreatedJobs,
-  } = useFetch(getMyJobs,{
-    recruiter_id: user.id
+  } = useFetch(getMyJobs, {
+    recruiter_id: user.id,
   });
 
-    useEffect(() => {
-      fnCreatedJobs();
-    }, []);
+  useEffect(() => {
+    fnCreatedJobs();
+  }, []);
 
-  if(loadingCreatedJobs){
+  if (loadingCreatedJobs) {
     return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
   }
 
-  return <div>
-    {loadingCreatedJobs === false && (
-        <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+  return (
+    <>
+      {loadingCreatedJobs === false && (
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {createdJobs?.length ? (
             createdJobs.map((job) => {
               return (
@@ -45,7 +45,8 @@ const CreatedJobs = () => {
           )}
         </div>
       )}
-  </div>
+    </>
+  );
 };
 
-export default CreatedJobs
+export default CreatedJobs;

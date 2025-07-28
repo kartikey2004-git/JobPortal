@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Find your dream job",
+    "content":
+      "Explore job listings across various industries. Filter by role, company, or location to find the perfect match."
+  },
+  {
+    "title": "Manage your Applications",
+    "content":"Stay organized with our application tracker. Get notified about application statuses."
+  },
+  {
+    "title": "Set your job preferences",
+    "content":
+      "Tailor your job recommendations by selecting your preferred job roles, industries, and locations."
+  }
+]

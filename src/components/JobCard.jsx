@@ -62,7 +62,7 @@ const JobCard = ({
         <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
       )}
       <CardHeader>
-        <CardTitle className="flex justify-between font-bold text-lg sm:text-xl">
+        <CardTitle className="flex justify-between font-semibold text-lg sm:text-xl">
           {job.title}
           {isMyJob && (
             <Trash2Icon
