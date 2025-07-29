@@ -53,7 +53,6 @@ const Header = () => {
               <Link to="/post-job">
                 <Button variant="destructive" className="rounded-full">
                   <PenBox size={20} className="mr-2" />
-                  Post a Job
                 </Button>
               </Link>
             )}
