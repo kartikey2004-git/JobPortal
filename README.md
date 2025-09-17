@@ -1,11 +1,11 @@
 
-#  JobConnect – Modern Job Portal
+#  JobConnect
 
 JobConnect is a job portal web application built with **React.js**, **JavaScript**, and **Supabase**. It allows users to explore job listings, post jobs (for recruiters), and track job applications (for candidates).
 
 ---
 
-## 📌 Preview
+## Preview
 
 **Live Site** → [https://jobconnectx.vercel.app](https://jobconnectx.vercel.app/)  
 **Repo** → [https://github.com/kartikey2004-git/JobPortal](https://github.com/kartikey2004-git/JobPortal)
@@ -13,7 +13,7 @@ JobConnect is a job portal web application built with **React.js**, **JavaScript
 ---
 
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Frontend        | Backend/Auth        | Database     |
 |-----------------|---------------------|--------------|
@@ -21,27 +21,34 @@ JobConnect is a job portal web application built with **React.js**, **JavaScript
 | Tailwind CSS    | Supabase Functions  | PostgreSQL   |
 
 
-## ✨ Key Features
+##  Key Features
 
-- 👨‍💼 **User Roles**: Candidate & Recruiter
-- 🔐 **Authentication**: Supabase Auth (email/password)
-- 📄 **Job Listings**: Browse all available jobs
-- 🎯 **Job Posting**: Recruiters can create and manage listings
-- 📬 **Application Tracking**: Candidates can apply and track their applications
-- 🔍 **Search & Filters**: Filter jobs by location, role, type, etc.
-- 💾 **Database**: Supabase PostgreSQL
-- ⚙️ **Responsive UI**: Mobile-first & keyboard-friendly design
+**✨ Features**
+
+- Role-based access for Candidates and Recruiters
+
+- Post new jobs with title, description, requirements, etc.
+
+- Apply to jobs directly from candidate dashboard
+
+- Track application status (applied, interviewing, hired, rejected)
+
+- Update status from recruiter dashboard with dropdown UI
+
+- View job details, company info, and required skills
+
+- Authentication & Authorization via Supabase (email/password)
+
+- Protected routes based on login and user type
+
+- Responsive design for mobile, tablet, and desktop
+
+- Real-time data sync using Supabase subscriptions (optional)
+
+- Friendly UI with loading states, notifications, and clean UX+
 ---
 
-##  Snapshots
-
-| Home Page | LatestJobs | Jobpage | PostJob
-|-----------|-----------|----------------|----------------|
-| ![Home](./snapshots/home.png) | ![LatestJobs](./snapshots/latestjobs.png) | ![Jobpage](./snapshots/jobPage.png) | ![PostJob](./snapshots/PostJob.png)
-
----
-
-## 🧠 Project Overview
+##  Project Overview
 
 The Job Portal follows a frontend-heavy architecture, using Supabase for backend functionality like authentication, data storage, and access control. React manages the UI logic, routing, and application state.
 
@@ -103,43 +110,73 @@ npm run dev
 
 🗂️ Folder Structure
 ```php
-
-url-shortener/
-src/
-├── components/             # Reusable UI components
-├── pages/                  # All main routes (Browse, Apply, Dashboard)
-├── data/                   # Static JSON (FAQs, icons, etc.)
-├── services/              # Supabase integration & helper functions
-├── hooks/                 # Custom React hooks (e.g. auth handling)
-├── utils/                 # Utility functions (formatting, validation)
-├── App.jsx                 # Main routing & layout
-└── main.jsx                # React DOM root 
+JOBCONNECT
+├── .git
+├── node_modules
+├── public
+├── src
+│   ├── api
+│   │   ├── apiApplications.js
+│   │   ├── apiCompanies.js
+│   │   └── apiJobs.js
+│   ├── components
+│   │   ├── subComponents
+│   │   │   ├── Companies.jsx
+│   │   │   ├── Faqs.jsx
+│   │   │   ├── Features.jsx
+│   │   │   ├── HeroSection.jsx
+│   │   │   └── Users.jsx
+│   │   └── ui
+│   │       ├── AddCompanyDrawer.jsx
+│   │       ├── ApplicationCard.jsx
+│   │       ├── ApplyJob.jsx
+│   │       ├── CreatedApplication.jsx
+│   │       ├── CreatedJobs.jsx
+│   │       ├── Header.jsx
+│   │       ├── JobCard.jsx
+│   │       ├── ProtectedRoute.jsx
+│   │       └── ThemeProvider.jsx
+│   ├── data
+│   │   ├── companies.json
+│   │   ├── faqs.json
+│   │   └── features.json
+│   ├── hooks
+│   │   └── UseFetch.jsx
+│   ├── layout
+│   │   └── AppLayout.jsx
+│   ├── lib
+│   │   └── utils.js
+│   ├── pages
+│   │   ├── Job.jsx
+│   │   ├── JobListing.jsx
+│   │   ├── LandingPage.jsx
+│   │   ├── MyJobs.jsx
+│   │   ├── Onboarding.jsx
+│   │   ├── PostJob.jsx
+│   │   └── SavedJobs.jsx
+│   ├── utils
+│   │   └── supabase.js
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   ├── main.jsx
+├── .env
+├── .gitignore
+├── components.json
+├── eslint.config.js
+├── index.html
+├──jsconfig.json
+├──package-lock.json
+├──package.json
+├──postcss.config.js
+├──README.md
+├──tailwind.config.js
+├──vercel.json
+├──vite.config.js
 ```
 
 
-**✨ Features**
-
-- Role-based access for Candidates and Recruiters
-
-- Post new jobs with title, description, requirements, etc.
-
-- Apply to jobs directly from candidate dashboard
-
-- Track application status (applied, interviewing, hired, rejected)
-
-- Update status from recruiter dashboard with dropdown UI
-
-- View job details, company info, and required skills
-
-- Authentication & Authorization via Supabase (email/password)
-
-- Protected routes based on login and user type
-
-- Responsive design for mobile, tablet, and desktop
-
-- Real-time data sync using Supabase subscriptions (optional)
-
-- Friendly UI with loading states, notifications, and clean UX
+ 
 
 ---
 
