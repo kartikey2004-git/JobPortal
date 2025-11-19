@@ -33,8 +33,8 @@ const Header = () => {
     <>
       <nav className="py-4 flex justify-between items-center">
         <Link>
-          <h1 className="text-2xl md:text-3xl text-white cursor-pointer">
-            JobConnect
+          <h1 className="text-2xl font-semibold md:text-3xl text-white cursor-pointer">
+            JobConnect ✨
           </h1>
         </Link>
         <div className="flex gap-8">
@@ -65,16 +65,24 @@ const Header = () => {
               }}
             >
               <UserButton.MenuItems>
-                <UserButton.Link
-                  label="My Jobs"
-                  labelIcon={<BriefcaseBusiness size={15} />}
-                  href="/my-jobs"
-                ></UserButton.Link>
+                {user?.unsafeMetadata?.role === "candidate" ? (
+                  <UserButton.Link
+                    label="My Applications"
+                    labelIcon={<BriefcaseBusiness size={15} />}
+                    href="/my-jobs"
+                  ></UserButton.Link>
+                ) : (
+                  <UserButton.Link
+                    label="My Jobs"
+                    labelIcon={<BriefcaseBusiness size={15} />}
+                    href="/my-jobs"
+                  ></UserButton.Link>
+                )}
               </UserButton.MenuItems>
 
               <UserButton.MenuItems>
                 <UserButton.Link
-                  label="Saved Jobs"
+                  label="Wishlisted Jobs"
                   labelIcon={<Heart size={15} />}
                   href="/saved-jobs"
                 ></UserButton.Link>

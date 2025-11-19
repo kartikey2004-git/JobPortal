@@ -21,14 +21,10 @@ const Features = () => {
   return (
     <section className="mx-auto px-6 py-24 lg:px-20 w-full bg-opacity-90">
       <div className="text-center mb-16">
-        <h3 className="text-4xl font-semibold  tracking-tight mb-4">
-          Built for Candidates, Professionals, and Recruiters
+        <h3 className="text-3xl font-normal  tracking-tight mb-4">
+          Built for Candidates<br/> Professionals, and Recruiters
         </h3>
-        <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">
-          JobConnect helps job seekers find the right roles and teams hire
-          faster — whether you’re starting out, growing your career, or building
-          one.
-        </p>
+        
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">

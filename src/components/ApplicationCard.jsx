@@ -41,7 +41,7 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
     <Card className="w-full md:max-w-xl mx-auto flex flex-col rounded-xl">
       {loadingHiringStatus && <BarLoader width={"100%"} color="#36d7b7" />}
       <CardHeader>
-        <CardTitle className="flex justify-between items-center font-bold">
+        <CardTitle className="flex justify-between items-center font-semibold">
           <span className="text-center">{isCandidate ? `${application?.job?.title} at ${application?.job?.company?.name}` : application?.name}</span>
           <Download
             size={18}
@@ -71,7 +71,7 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
       <CardFooter className="flex justify-between items-center">
         <span className="text-xs sm:text-sm">{new Date(application?.created_at).toLocaleString()}</span>
         {isCandidate ? (
-          <span className="capitalize font-bold text-xs sm:text-sm">
+          <span className="capitalize text-xs sm:text-sm">
             Status : {application?.status}
           </span>
         ) : (

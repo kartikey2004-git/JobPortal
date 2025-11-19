@@ -90,7 +90,7 @@ const ApplyJobDrawer = ({ job, user, applied = false, fetchJob }) => {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>
+          <DrawerTitle className="font-normal">
             Apply for {job?.title} at {job?.company?.name}
           </DrawerTitle>
           <DrawerDescription>Please fill the form below</DrawerDescription>
@@ -130,15 +130,15 @@ const ApplyJobDrawer = ({ job, user, applied = false, fetchJob }) => {
               <RadioGroup onValueChange={field.onChange} {...field}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="Intermediate" id="intermediate" />
-                  <Label htmlFor="intermediate">Intermediate</Label>
+                  <Label htmlFor="intermediate" className="font-normal">Intermediate</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="Graduate" id="graduate" />
-                  <Label htmlFor="graduate">Graduate</Label>
+                  <Label className="font-normal" htmlFor="graduate">Graduate</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="Post Graduate" id="post-graduate" />
-                  <Label htmlFor="post-graduate">Post Graduate</Label>
+                  <Label className="font-normal" htmlFor="post-graduate">Post Graduate</Label>
                 </div>
               </RadioGroup>
             )}
@@ -165,14 +165,14 @@ const ApplyJobDrawer = ({ job, user, applied = false, fetchJob }) => {
 
           {loadingApply && <BarLoader width={"100%"} color="#36d7b7" />}
 
-          <Button type="submit" variant="blue" size="lg">
+          <Button type="submit" variant="blue" size="lg" className="font-normal">
             Apply
           </Button>
         </form>
 
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button className="font-normal" variant="outline">Cancel</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

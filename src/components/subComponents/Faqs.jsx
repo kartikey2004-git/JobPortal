@@ -13,7 +13,7 @@ const Faqs = () => {
       viewport={{ once: true }}
     >
       <div className="text-center max-w-2xl mx-auto mb-12">
-        <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
+        <h2 className="text-3xl sm:text-4xl  text-white mb-4">
           Frequently Asked Questions
         </h2>
         <p className="text-gray-400 text-sm sm:text-base">

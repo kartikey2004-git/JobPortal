@@ -54,13 +54,13 @@ const JobPage = () => {
   return (
     <div className="flex flex-col gap-8 mt-5 p-4 sm:p-6">
       <div className="flex flex-col-reverse gap-6 md:flex-row justify-between items-center">
-        <h1 className="gradient-title  pb-3 text-2xl sm:text-4xl md:text-5xl">
+        <h1 className="gradient-title  pb-3 text-2xl sm:text-4xl md:text-4xl">
           {job?.title}
         </h1>
         <img
           src={job?.company?.logo_url}
           alt={job?.title}
-          className="h-12 md:h-16 w-auto object-contain"
+          className="h-12 md:h-12 w-auto object-contain"
         />
       </div>
 
@@ -111,10 +111,10 @@ const JobPage = () => {
         </Select>
       )}
 
-      <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">About the job</h2>
+      <h2 className="text-xl sm:text-2xl md:text-3xl ">About the job</h2>
       <p className="text-sm sm:text-lg">{job?.description}</p>
 
-      <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">What we are looking for</h2>
+      <h2 className="text-xl sm:text-2xl md:text-3xl ">What we are looking for</h2>
       <MDEditor.Markdown
         source={job?.requirements}
         className="bg-transparent text-sm sm:text-lg"
@@ -131,7 +131,7 @@ const JobPage = () => {
 
       {job?.applications?.length > 0 && job?.recruiter_id === user?.id && (
         <div className="flex flex-col gap-2">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Applications</h2>
+          <h2 className="text-xl sm:text-2xl md:text-3xl">Applications</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {job?.applications.map((application) => (
               <ApplicationCard key={application.id} application={application} />

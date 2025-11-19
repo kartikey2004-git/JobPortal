@@ -38,7 +38,7 @@ const Onboarding = () => {
 
   return (
     <div className="flex flex-col items-center justify-center mt-16 md:mt-32 px-4 sm:px-8 lg:px-16">
-      <h2 className="gradient-title font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-center">
+      <h2 className="gradient-title font-semibold text-4xl tracking-tighter text-center">
         I am a...
       </h2>
 

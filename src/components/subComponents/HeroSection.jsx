@@ -49,7 +49,7 @@ const HeroSection = () => {
         variants={fadeUp}
       >
         <motion.h2
-          className="text-[36px] sm:text-[48px]  font-semibold lg:text-[54px] leading-tight"
+          className="text-[36px] sm:text-[48px]  font-normal lg:text-[54px] leading-tight"
           variants={fadeUp}
           custom={0.3}
         >
@@ -93,7 +93,7 @@ const HeroSection = () => {
 
           <ShareButton
             links={shareLinks}
-            className="bg-gray-950/10 text-white text-base font-sans first:rounded-xl border font-semibold border-gray-800 backdrop-blur hover:bg-gray-900/90 transition duration-200 shadow-md"
+            className="bg-gray-950/10 text-white text-base font-sans first:rounded-xl border  border-gray-800 backdrop-blur hover:bg-gray-900/90 transition duration-200 shadow-md"
           >
             <Link size={15} />
             Share this Job Portal
