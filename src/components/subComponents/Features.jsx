@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import features from "../../data/features.json";
 import { FiSearch, FiSettings, FiUser } from "react-icons/fi";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 const icons = [FiSearch, FiUser, FiSettings];
-const buttons = ["Browse Jobs", "Track Applications", "Set Preferences"];
+const buttons = ["Browse jobs", "Track applications", "Set preferences"];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -21,10 +21,13 @@ const Features = () => {
   return (
     <section className="mx-auto px-6 py-24 lg:px-20 w-full bg-opacity-90">
       <div className="text-center mb-16">
-        <h3 className="text-3xl font-normal  tracking-tight mb-4">
-          Built for Candidates<br/> Professionals, and Recruiters
+        <h3 className="text-3xl md:text-4xl font-semibold tracking-tight mb-4">
+          Designed for candidates
+          <br /> professionals, and recruiters
         </h3>
-        
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          A platform that simplifies hiring for everyone involved.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -35,19 +38,23 @@ const Features = () => {
           return (
             <motion.article
               key={i}
-              className="relative min-h-[260px] p-6 rounded-2xl border border-purple-500/10 text-white shadow-lg bg-gray-950/30 hover:shadow-2xl w-full max-w-[600px] mx-auto transition-all"
+              className="relative min-h-[280px] p-8 rounded-2xl border border-border bg-card text-card-foreground shadow-soft hover:shadow-soft-lg w-full max-w-[600px] mx-auto transition-all duration-200 ease-out-subtle"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
               custom={i}
             >
-              <h3 className="text-2xl font-medium mb-3">{card.title}</h3>
-              <p className="text-white/80 text-sm leading-relaxed">
+              <h3 className="text-xl font-semibold mb-4">{card.title}</h3>
+              <p className="text-muted-foreground text-base leading-relaxed mb-6">
                 {card.content}
               </p>
 
-              <Button className="absolute bottom-4 left-4  mt-2 inline-block text-sm px-4 py-2 rounded-md transition">
+              <Button
+                variant="secondary"
+                size="lg"
+                className="absolute bottom-4 left-4"
+              >
                 {btnText}
               </Button>
 

@@ -52,18 +52,18 @@ const JobListing = () => {
   };
 
   const clearFilters = () => {
-    setSearchQuery("")
-    setCompany_id("")
-    setLocation("")
-  }
+    setSearchQuery("");
+    setCompany_id("");
+    setLocation("");
+  };
 
   if (!isLoaded) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return <BarLoader className="mb-4" width={"100%"} color="#000000" />;
   }
 
   return (
     <div>
-      <h1 className="gradient-title  text-4xl text-center pb-8">
+      <h1 className="text-4xl font-semibold text-center pb-8 pt-8">
         Latest Jobs
       </h1>
 
@@ -74,12 +74,12 @@ const JobListing = () => {
       >
         <Input
           type="text"
-          placeholder="Search Jobs by Title..."
+          placeholder="Search jobs by title..."
           name="search-query"
           className="h-full flex-1 px-4 text-md"
         />
 
-        <Button type="submit" className="h-full sm:w-28" variant="blue">
+        <Button type="submit" className="h-full sm:w-28 text-md">
           Search
         </Button>
       </form>
@@ -105,7 +105,7 @@ const JobListing = () => {
           onValueChange={(value) => setCompany_id(value)}
         >
           <SelectTrigger>
-            <SelectValue placeholder="Filter by Company" />
+            <SelectValue placeholder="Filter by company" />
           </SelectTrigger>
           <SelectContent>
             {companies?.length > 0 ? (
@@ -115,21 +115,25 @@ const JobListing = () => {
                 </SelectItem>
               ))
             ) : (
-              <div>No Companies available</div>
+              <div className="text-muted-foreground">
+                No companies available
+              </div>
             )}
           </SelectContent>
         </Select>
 
-
-        <Button onClick={clearFilters} variant="destructive" className="sm:w-1/2">Clear Filters</Button>
+        <Button onClick={clearFilters}
+        variant="secondary"  className="sm:w-1/2">
+          Clear filters
+        </Button>
       </div>
 
       {loadingJobs && (
-        <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
+        <BarLoader className="mt-4" width={"100%"} color="#000000" />
       )}
 
       {loadingJobs === false && (
-        <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {jobs?.length ? (
             jobs.map((job) => {
               return (
@@ -141,7 +145,9 @@ const JobListing = () => {
               );
             })
           ) : (
-            <div>No Jobs found</div>
+            <div className="col-span-full text-center py-12">
+              <p className="text-muted-foreground">No jobs found</p>
+            </div>
           )}
         </div>
       )}

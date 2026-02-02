@@ -20,7 +20,7 @@ import { BarLoader } from "react-spinners";
 const JobPage = () => {
   const { isLoaded, user } = useUser();
   console.log(user);
-  
+
   const { id } = useParams();
 
   const {
@@ -35,7 +35,7 @@ const JobPage = () => {
     updateHiringStatus,
     {
       job_id: id,
-    }
+    },
   );
 
   const handleStatusChange = (value) => {
@@ -48,13 +48,13 @@ const JobPage = () => {
   }, [isLoaded]);
 
   if (!isLoaded || loadingJob) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return <BarLoader className="mb-4" width={"100%"} color="#000000" />;
   }
 
   return (
     <div className="flex flex-col gap-8 mt-5 p-4 sm:p-6">
       <div className="flex flex-col-reverse gap-6 md:flex-row justify-between items-center">
-        <h1 className="gradient-title  pb-3 text-2xl sm:text-4xl md:text-4xl">
+        <h1 className="pb-3 text-2xl sm:text-4xl md:text-4xl font-semibold">
           {job?.title}
         </h1>
         <img
@@ -72,7 +72,7 @@ const JobPage = () => {
 
         <div className="flex gap-2 items-center">
           <BriefcaseIcon />
-          <span>{job?.applications?.length} Applicants</span>
+          <span>{job?.applications?.length} applicants</span>
         </div>
 
         <div className="flex gap-2 items-center">
@@ -91,17 +91,15 @@ const JobPage = () => {
       </div>
 
       {/* Hiring Status */}
-      {loadingHiringStatus && <BarLoader width={"100%"} color="#36d7b7" />}
+      {loadingHiringStatus && <BarLoader width={"100%"} color="#000000" />}
 
       {job?.recruiter_id === user?.id && (
         <Select onValueChange={handleStatusChange}>
           <SelectTrigger
-            className={`w-full ${
-              job?.isOpen ? "bg-green-950" : "bg-red-950"
-            }`}
+            className={`w-full ${job?.isOpen ? "bg-green-950" : "bg-red-950"}`}
           >
             <SelectValue
-              placeholder={`Hiring Status ${job?.isOpen ? "( Open )" : "( Closed )"}`}
+              placeholder={`Hiring status ${job?.isOpen ? "(Open)" : "(Closed)"}`}
             />
           </SelectTrigger>
           <SelectContent>
@@ -111,10 +109,14 @@ const JobPage = () => {
         </Select>
       )}
 
-      <h2 className="text-xl sm:text-2xl md:text-3xl ">About the job</h2>
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
+        About the job
+      </h2>
       <p className="text-sm sm:text-lg">{job?.description}</p>
 
-      <h2 className="text-xl sm:text-2xl md:text-3xl ">What we are looking for</h2>
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
+        What we are looking for
+      </h2>
       <MDEditor.Markdown
         source={job?.requirements}
         className="bg-transparent text-sm sm:text-lg"
@@ -131,8 +133,10 @@ const JobPage = () => {
 
       {job?.applications?.length > 0 && job?.recruiter_id === user?.id && (
         <div className="flex flex-col gap-2">
-          <h2 className="text-xl sm:text-2xl md:text-3xl">Applications</h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
+            Applications
+          </h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             {job?.applications.map((application) => (
               <ApplicationCard key={application.id} application={application} />
             ))}

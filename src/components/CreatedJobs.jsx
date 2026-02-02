@@ -22,7 +22,7 @@ const CreatedJobs = () => {
   }, []);
 
   if (loadingCreatedJobs) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return <BarLoader className="mb-4" width={"100%"} color="#000000" />;
   }
 
   return (
@@ -41,7 +41,7 @@ const CreatedJobs = () => {
               );
             })
           ) : (
-            <div>No Jobs found</div>
+            <div>No jobs found</div>
           )}
         </div>
       )}

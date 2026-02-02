@@ -57,18 +57,17 @@ const JobCard = ({
   }, [savedJob]);
 
   return (
-    <Card className="flex flex-col p-4 sm:p-6 gap-4">
+    <Card className="flex flex-col p-6 gap-4 hover:shadow-soft-md transition-all duration-150">
       {loadingDeleteJob && (
-        <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
+        <BarLoader className="mt-4" width={"100%"} color="#000000" />
       )}
       <CardHeader>
-        <CardTitle className="flex justify-between  text-lg sm:text-xl">
+        <CardTitle className="flex justify-between items-center text-lg sm:text-xl">
           {job.title}
           {isMyJob && (
             <Trash2Icon
-              fill="red"
               size={18}
-              className="text-red-300 cursor-pointer"
+              className="text-destructive hover:text-destructive/80 cursor-pointer transition-colors duration-150"
               onClick={handleDeleteJob}
             />
           )}
@@ -89,7 +88,7 @@ const JobCard = ({
             <span className="text-sm sm:text-base">{job.location}</span>
           </div>
         </div>
-        <hr />
+        <div className="border-t border-border pt-4"></div>
         <p className="text-sm sm:text-base">
           {job.description.substring(0, job.description.indexOf("."))}
         </p>
@@ -97,9 +96,7 @@ const JobCard = ({
 
       <CardFooter className="flex flex-col sm:flex-row gap-4 sm:gap-2 w-full justify-between">
         <Link to={`/job/${job.id}`} className="w-full sm:w-auto">
-          <Button variant="secondary" className="w-full sm:w-auto">
-            More Details
-          </Button>
+          <Button variant="secondary">View details</Button>
         </Link>
 
         {!isMyJob && (

@@ -20,14 +20,12 @@ const SavedJobs = () => {
   }, [isLoaded]);
 
   if (!isLoaded || loadingSavedJobs) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return <BarLoader className="mb-4" width={"100%"} color="#000000" />;
   }
 
   return (
-    <div>
-      <h1 className="gradient-title text-4xl  text-center">
-        Saved Jobs
-      </h1>
+    <div className="pt-16">
+      <h1 className="text-4xl  text-center">Saved Jobs</h1>
 
       {loadingSavedJobs === false && (
         <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">

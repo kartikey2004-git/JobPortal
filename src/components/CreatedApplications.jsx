@@ -22,18 +22,24 @@ const CreatedApplications = () => {
   }, []);
 
   if (loadingApplications) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return <BarLoader className="mb-4" width={"100%"} color="#000000" />;
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {applications?.map((application) => (
-        <ApplicationCard
-          key={application.id}
-          application={application}
-          isCandidate={true}
-        />
-      ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {applications?.length > 0 ? (
+        applications?.map((application) => (
+          <ApplicationCard
+            key={application.id}
+            application={application}
+            isCandidate={true}
+          />
+        ))
+      ) : (
+        <div className="col-span-full text-center py-12">
+          <p className="text-muted-foreground">No applications found</p>
+        </div>
+      )}
     </div>
   );
 };

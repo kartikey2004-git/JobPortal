@@ -1,30 +1,34 @@
 import { motion } from "framer-motion";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
 
-import faqs from "../../data/faqs.json"
+import faqs from "../../data/faqs.json";
 
 const Faqs = () => {
   return (
     <motion.section
-      className="w-full py-16 px-4 "
+      className="w-full py-16 px-4"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
     >
-      <div className="text-center max-w-2xl mx-auto mb-12">
-        <h2 className="text-3xl sm:text-4xl  text-white mb-4">
-          Frequently Asked Questions
+      <div className="text-center max-w-2xl mx-auto mb-16">
+        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-4">
+          FAQs
         </h2>
-        <p className="text-gray-400 text-sm sm:text-base">
-          Everything you need to know about how JobConnect works for candidates
-          and employers.
+        <p className="text-muted-foreground text-lg">
+          Frequently Asked Questions
         </p>
       </div>
       <Accordion
         type="single"
         collapsible
-        className="max-w-4xl mx-auto divide-y divide-white/10 rounded-xl backdrop-blur-sm"
+        className="max-w-4xl mx-auto divide-y divide-border rounded-xl bg-card shadow-soft p-6"
       >
         {Array.isArray(faqs) &&
           faqs.map((faq, i) => (
@@ -36,10 +40,10 @@ const Faqs = () => {
               viewport={{ once: true }}
             >
               <AccordionItem value={`faq-${i}`}>
-                <AccordionTrigger className="text-white text-left text-base sm:text-lg font-normal py-4 hover:text-purple-400 transition-colors">
+                <AccordionTrigger className="text-left text-base sm:text-lg font-medium py-6 hover:text-primary transition-colors duration-200">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-400 text-sm sm:text-base pb-4 leading-relaxed">
+                <AccordionContent className="text-muted-foreground text-base sm:text-lg pb-6 leading-relaxed">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

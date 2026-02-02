@@ -31,10 +31,10 @@ const Header = () => {
 
   return (
     <>
-      <nav className="py-4 flex justify-between items-center">
+      <nav className="py-6 flex justify-between items-center border-b border-border/50 bg-background/95 backdrop-blur-sm sticky top-0 z-40">
         <Link>
-          <h1 className="text-2xl font-semibold md:text-3xl text-white cursor-pointer">
-            JobConnect ✨
+          <h1 className="text-2xl md:text-3xl font-semibold cursor-pointer tracking-tight hover:text-primary transition-colors duration-150">
+            JobConnect
           </h1>
         </Link>
         <div className="flex gap-8">
@@ -42,9 +42,9 @@ const Header = () => {
             <Button
               onClick={() => setShowSignIn(true)}
               variant="outline"
-              className="bg-gray-950"
+              className=""
             >
-              Login
+              Sign in
             </Button>
           </SignedOut>
 
@@ -67,13 +67,13 @@ const Header = () => {
               <UserButton.MenuItems>
                 {user?.unsafeMetadata?.role === "candidate" ? (
                   <UserButton.Link
-                    label="My Applications"
+                    label="Applications"
                     labelIcon={<BriefcaseBusiness size={15} />}
                     href="/my-jobs"
                   ></UserButton.Link>
                 ) : (
                   <UserButton.Link
-                    label="My Jobs"
+                    label="Posted Jobs"
                     labelIcon={<BriefcaseBusiness size={15} />}
                     href="/my-jobs"
                   ></UserButton.Link>
@@ -82,7 +82,7 @@ const Header = () => {
 
               <UserButton.MenuItems>
                 <UserButton.Link
-                  label="Wishlisted Jobs"
+                  label="Saved Jobs"
                   labelIcon={<Heart size={15} />}
                   href="/saved-jobs"
                 ></UserButton.Link>
@@ -95,9 +95,9 @@ const Header = () => {
       {showSignIn && (
         <div
           onClick={handleOverlayClick}
-          className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50 overflow-auto"
+          className="fixed inset-0 z-50 flex justify-center items-center bg-black/10 backdrop-blur-sm overflow-auto transition-opacity duration-200"
         >
-          <div className=" p-4 rounded-lg max-w-md w-full">
+          <div className="p-4 rounded-xl max-w-md w-full">
             <SignIn
               signUpForceRedirectUrl="/onboarding"
               fallbackRedirectUrl="/onboarding"

@@ -17,6 +17,15 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: [
+          "Inter",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "sans-serif",
+        ],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -56,6 +65,26 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      spacing: {
+        18: "4.5rem",
+        88: "22rem",
+      },
+      boxShadow: {
+        soft: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+        "soft-md": "0 2px 4px 0 rgba(0, 0, 0, 0.08)",
+        "soft-lg":
+          "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+        "soft-xl":
+          "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      },
+      transitionDuration: {
+        150: "150ms",
+        200: "200ms",
+        250: "250ms",
+      },
+      transitionTimingFunction: {
+        "ease-out-subtle": "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
         "accordion-down": {

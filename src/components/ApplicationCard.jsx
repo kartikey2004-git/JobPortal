@@ -30,7 +30,7 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
     updateApplicationStatus,
     {
       job_id: application.job_id,
-    }
+    },
   );
 
   const handleStatusChangeChange = (status) => {
@@ -38,14 +38,18 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
   };
 
   return (
-    <Card className="w-full md:max-w-xl mx-auto flex flex-col rounded-xl">
-      {loadingHiringStatus && <BarLoader width={"100%"} color="#36d7b7" />}
+    <Card className="w-full md:max-w-xl mx-auto flex flex-col rounded-xl hover:shadow-soft-md transition-all duration-150">
+      {loadingHiringStatus && <BarLoader width={"100%"} color="#000000" />}
       <CardHeader>
         <CardTitle className="flex justify-between items-center font-semibold">
-          <span className="text-center">{isCandidate ? `${application?.job?.title} at ${application?.job?.company?.name}` : application?.name}</span>
+          <span className="text-center">
+            {isCandidate
+              ? `${application?.job?.title} at ${application?.job?.company?.name}`
+              : application?.name}
+          </span>
           <Download
             size={18}
-            className="bg-white text-black rounded-full h-8 w-8 p-1.5 cursor-pointer"
+            className="bg-card text-foreground border border-border rounded-lg h-8 w-8 p-1.5 cursor-pointer hover:bg-accent/50 transition-colors duration-150"
             onClick={handleDownload}
           />
         </CardTitle>
@@ -55,7 +59,7 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
         <div className="flex flex-col sm:flex-row justify-between gap-1">
           <div className="flex gap-2 items-center">
             <BriefcaseBusiness size={18} />
-            {application?.experience} years of experience
+            {application?.experience} years experience
           </div>
           <div className="flex gap-2 items-center">
             <School size={15} />
@@ -66,13 +70,15 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
             Skills: {application?.skills}
           </div>
         </div>
-        <hr />
+        <div className="border-t border-border pt-4"></div>
       </CardContent>
       <CardFooter className="flex justify-between items-center">
-        <span className="text-xs sm:text-sm">{new Date(application?.created_at).toLocaleString()}</span>
+        <span className="text-xs sm:text-sm">
+          {new Date(application?.created_at).toLocaleString()}
+        </span>
         {isCandidate ? (
           <span className="capitalize text-xs sm:text-sm">
-            Status : {application?.status}
+            Status: {application?.status}
           </span>
         ) : (
           <Select
@@ -81,7 +87,7 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
             className="w-full sm:w-52"
           >
             <SelectTrigger className="w-full sm:w-52">
-              <SelectValue placeholder="Application Status" />
+              <SelectValue placeholder="Application status" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="applied">Applied</SelectItem>

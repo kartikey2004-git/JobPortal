@@ -20,14 +20,14 @@ import { BarLoader } from "react-spinners";
 import { useEffect } from "react";
 
 const schema = z.object({
-  name: z.string().min(1, { message: "Company name is required " }),
+  name: z.string().min(1, { message: "Company name is required" }),
   logo: z
     .any()
     .refine(
       (file) =>
         file[0] &&
         (file[0].type === "image/png" || file[0].type === "image/jpeg"),
-      { message: "Only images are allowed" }
+      { message: "Please upload a valid image file" },
     ),
 });
 
@@ -50,24 +50,24 @@ const AddCompanyDrawer = ({ fetchCompanies }) => {
   const onSubmit = (data) => {
     fnAddCompany({
       ...data,
-      logo: data.logo[0]
-    })
+      logo: data.logo[0],
+    });
   };
 
   useEffect(() => {
-    if(dataAddCompany?.length > 0) fetchCompanies()
-  },[loadingAddCompany])
+    if (dataAddCompany?.length > 0) fetchCompanies();
+  }, [loadingAddCompany]);
 
   return (
     <Drawer>
       <DrawerTrigger>
         <Button className="flex justify-start" type="button" size="sm">
-          Add Company
+          Add company
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Add a New Company</DrawerTitle>
+          <DrawerTitle>Add company</DrawerTitle>
         </DrawerHeader>
 
         <form className="flex gap-2 p-4 pb-8">
@@ -76,7 +76,7 @@ const AddCompanyDrawer = ({ fetchCompanies }) => {
           <Input
             type="file"
             accept="image/*"
-            className="file:text-gray-500"
+            className="file:text-muted-foreground"
             {...register("logo")}
           />
 
@@ -86,7 +86,7 @@ const AddCompanyDrawer = ({ fetchCompanies }) => {
             variant="destructive"
             className="w-48"
           >
-            Add
+            Save
           </Button>
         </form>
 
@@ -98,7 +98,7 @@ const AddCompanyDrawer = ({ fetchCompanies }) => {
           <p className="text-red-500">{errorAddCompany?.message}</p>
         )}
 
-        {loadingAddCompany && <BarLoader width={"100%"} color="#36d7b7"/>}
+        {loadingAddCompany && <BarLoader width={"100%"} color="#000000" />}
 
         <DrawerFooter>
           <DrawerClose asChild>

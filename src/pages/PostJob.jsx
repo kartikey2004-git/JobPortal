@@ -24,11 +24,11 @@ import { BarLoader } from "react-spinners";
 import { z } from "zod";
 
 const schema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
-  description: z.string().min(1, { message: "Description is required" }),
-  location: z.string().min(1, { message: "Select a location" }),
-  company_id: z.string().min(1, { message: "Select or Add a new Company" }),
-  requirements: z.string().min(1, { message: "Requirements are required" }),
+  title: z.string().min(1, { message: "Job title is required" }),
+  description: z.string().min(1, { message: "Job description is required" }),
+  location: z.string().min(1, { message: "Please select a location" }),
+  company_id: z.string().min(1, { message: "Please select or add a company" }),
+  requirements: z.string().min(1, { message: "Job requirements are required" }),
 });
 
 const PostJob = () => {
@@ -80,7 +80,7 @@ const PostJob = () => {
   }, [loadingCreateJob]);
 
   if (!isLoaded || loadingCompanies) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return <BarLoader className="mb-4" width={"100%"} color="#000000" />;
   }
 
   if (user?.unsafeMetadata?.role !== "recruiter") {
@@ -89,9 +89,7 @@ const PostJob = () => {
 
   return (
     <div>
-      <h1 className="gradient-title  text-4xl sm:text-6xl text-center pb-8">
-        Post a Job
-      </h1>
+      <h1 className="text-4xl sm:text-6xl text-center pb-8 py-8">Post a Job</h1>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -156,7 +154,7 @@ const PostJob = () => {
             )}
           />
 
-          <AddCompanyDrawer fetchCompanies = {fnCompanies}/>
+          <AddCompanyDrawer fetchCompanies={fnCompanies} />
         </div>
 
         {errors.location && (
@@ -171,7 +169,11 @@ const PostJob = () => {
           name="requirements"
           control={control}
           render={({ field }) => (
-            <MDEditor value={field.value} onChange={field.onChange} className="bg-gray-900"/>
+            <MDEditor
+              value={field.value}
+              onChange={field.onChange}
+              data-color-mode="light"
+            />
           )}
         />
 
@@ -183,9 +185,9 @@ const PostJob = () => {
           <p className="text-red-500">{errorCreateJob?.message}</p>
         )}
 
-        {loadingCreateJob && <BarLoader width={"100%"} color="#36d7b7" />}
+        {loadingCreateJob && <BarLoader width={"100%"} color="#000000" />}
 
-        <Button className="mt-2" type="submit" variant="blue" size="lg">
+        <Button className="mt-2" type="submit" size="lg">
           Submit
         </Button>
       </form>
@@ -193,4 +195,4 @@ const PostJob = () => {
   );
 };
 
-export default PostJob
+export default PostJob;

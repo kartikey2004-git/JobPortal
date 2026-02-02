@@ -3,23 +3,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 const Users = () => {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-4 cursor-pointer">
-      <Card className="card hover:-translate-y-3 transition-all border-gray-900 duration-300 ease-in-out">
+      <Card className="card hover:-translate-y-3 transition-all duration-300 ease-in-out">
         <CardHeader>
-          <CardTitle>For Job Seekers</CardTitle>
+          <CardTitle>For candidates</CardTitle>
         </CardHeader>
         <CardContent>
-          Discover and apply for job opportunities, manage your applications,
-          and track your progress—all in one place.
+          Browse opportunities, submit applications, and track your progress—all
+          in one place.
         </CardContent>
       </Card>
 
-      <Card className="card hover:-translate-y-3 transition-all duration-300 border-gray-900 ease-in-out">
+      <Card className="card hover:-translate-y-3 transition-all duration-300 ease-in-out">
         <CardHeader>
-          <CardTitle>For Employers</CardTitle>
+          <CardTitle>For recruiters</CardTitle>
         </CardHeader>
         <CardContent>
-          Post job listings, manage applications, and find the ideal candidate
-          with ease.
+          Post openings, review applications, and connect with qualified
+          candidates.
         </CardContent>
       </Card>
     </section>
