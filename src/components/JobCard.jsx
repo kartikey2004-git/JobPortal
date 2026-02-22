@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Heart, MapPinIcon, Trash2Icon } from "lucide-react";
+import { Heart, MapPinIcon, Trash2Icon, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import useFetch from "@/hooks/UseFetch";
@@ -19,7 +19,7 @@ const JobCard = ({
   job,
   isMyJob = false,
   savedinit = false,
-  onJobSaved = () => {},
+  onJobSaved = () => { },
 }) => {
   const [saved, setSaved] = useState(savedinit);
 
@@ -45,8 +45,6 @@ const JobCard = ({
     job_id: job.id,
   });
 
-  // there is change possible here
-
   const handleDeleteJob = async () => {
     await fnDeleteJob();
     onJobSaved();
@@ -57,60 +55,70 @@ const JobCard = ({
   }, [savedJob]);
 
   return (
-    <Card className="flex flex-col p-6 gap-4 hover:shadow-soft-md transition-all duration-150">
+    <Card className="flex flex-col border bg-card transition-all duration-200">
       {loadingDeleteJob && (
-        <BarLoader className="mt-4" width={"100%"} color="#000000" />
+        <BarLoader className="w-full" color="hsl(var(--primary))" />
       )}
-      <CardHeader>
-        <CardTitle className="flex justify-between items-center text-lg sm:text-xl">
-          {job.title}
+      <CardHeader className="pb-3 px-6 pt-6">
+        <CardTitle className="flex justify-between items-start gap-2">
+          <span className="text-xl font-bold tracking-tight">{job.title}</span>
           {isMyJob && (
-            <Trash2Icon
-              size={18}
-              className="text-destructive hover:text-destructive/80 cursor-pointer transition-colors duration-150"
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground hover:text-destructive transition-colors h-8 w-8"
               onClick={handleDeleteJob}
-            />
+            >
+              <Trash2Icon size={16} />
+            </Button>
           )}
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-4 flex-1">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          {job?.company?.logo_url && (
-            <img
-              src={job.company.logo_url}
-              className="h-10 sm:h-7 object-contain"
-              alt="Company Logo"
-            />
-          )}
-          <div className="flex gap-2 items-center">
-            <MapPinIcon size={15} />
-            <span className="text-sm sm:text-base">{job.location}</span>
+      <CardContent className="flex flex-col gap-4 flex-1 px-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {job?.company?.logo_url && (
+              <div className="h-8 w-8 rounded p-1 flex items-center justify-center overflow-hidden">
+                <img
+                  src={job.company.logo_url}
+                  className="max-h-full max-w-full object-contain"
+                  alt={job.company.name}
+                />
+              </div>
+            )}
+            <span className="text-sm font-medium text-muted-foreground">
+              {job?.company?.name}
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 text-muted-foreground">
+            <MapPinIcon size={14} />
+            <span className="text-xs font-medium">{job.location}</span>
           </div>
         </div>
-        <div className="border-t border-border pt-4"></div>
-        <p className="text-sm sm:text-base">
-          {job.description.substring(0, job.description.indexOf("."))}
+
+        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+          {job.description}
         </p>
       </CardContent>
 
-      <CardFooter className="flex flex-col sm:flex-row gap-4 sm:gap-2 w-full justify-between">
-        <Link to={`/job/${job.id}`} className="w-full sm:w-auto">
-          <Button variant="secondary">View details</Button>
+      <CardFooter className="flex gap-3 p-6 pt-2">
+        <Link to={`/job/${job.id}`} className="flex-1">
+          <Button variant="outline" className="w-full justify-between hover:bg-primary hover:text-primary-foreground transition-all">
+            View details
+            <ExternalLink size={14} className="ml-2 opacity-50" />
+          </Button>
         </Link>
 
         {!isMyJob && (
           <Button
-            variant="outline"
-            className="w-full sm:w-auto"
+            variant="ghost"
+            size="icon"
+            className={`border transition-all ${saved ? "bg-red-50 dark:bg-red-950/20 text-red-600 border-red-200 dark:border-red-900" : "text-muted-foreground"}`}
             onClick={handleSavedJobs}
             disabled={loadingSavedJob}
           >
-            {saved ? (
-              <Heart size={20} stroke="red" fill="red" />
-            ) : (
-              <Heart size={20} />
-            )}
+            <Heart size={18} className={saved ? "fill-current" : ""} />
           </Button>
         )}
       </CardFooter>
@@ -119,3 +127,4 @@ const JobCard = ({
 };
 
 export default JobCard;
+

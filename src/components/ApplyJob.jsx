@@ -4,7 +4,6 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -19,15 +18,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useFetch from "@/hooks/UseFetch";
 import { applyToJob } from "@/api/apiApplications";
 import { BarLoader } from "react-spinners";
+import { Upload, Briefcase, GraduationCap, Code2, PlusCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { FileUser } from 'lucide-react';
 
 const schema = z.object({
   experience: z
     .number()
     .min(0, { message: "Please enter a valid number of years of experience" })
     .int(),
-
   skills: z.string().min(1, { message: "Please list your relevant skills" }),
-
   education: z.enum(["Intermediate", "Graduate", "Post Graduate"], {
     message: "Please select your highest level of education completed",
   }),
@@ -37,7 +37,8 @@ const schema = z.object({
       (file) =>
         file[0] &&
         (file[0].type === "application/pdf" ||
-          file[0].type === "application/msword"),
+          file[0].type === "application/msword" ||
+          file[0].type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
       { message: "Please upload a PDF or Word document" },
     ),
 });
@@ -47,11 +48,14 @@ const ApplyJobDrawer = ({ job, user, applied = false, fetchJob }) => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
     reset,
   } = useForm({
     resolver: zodResolver(schema),
   });
+
+  const selectedFile = watch("resume");
 
   const {
     loading: loadingApply,
@@ -68,8 +72,7 @@ const ApplyJobDrawer = ({ job, user, applied = false, fetchJob }) => {
       status: "applied",
       resume: data.resume[0],
     })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         fetchJob();
         reset();
       })
@@ -78,121 +81,155 @@ const ApplyJobDrawer = ({ job, user, applied = false, fetchJob }) => {
       });
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      },
+    },
+  };
+
   return (
     <Drawer open={applied ? false : undefined}>
       <DrawerTrigger asChild>
         <Button
-          size="lg"
+          size="default"
           variant={job?.isOpen && !applied ? "default" : "secondary"}
           disabled={!job?.isOpen || applied}
+          className="h-8 px-4 text-xs sm:h-10 sm:px-6 sm:text-sm font-semibold shadow-sm transition-all"
         >
-          {job?.isOpen ? (applied ? "Applied" : "Apply") : "Hiring Closed"}
+          {job?.isOpen ? (applied ? "Applied" : "Apply Now") : "Closed"}
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle className="font-normal">
-            Submit application for {job?.title} at {job?.company?.name}
-          </DrawerTitle>
-          <DrawerDescription>Please complete the form below</DrawerDescription>
-        </DrawerHeader>
+      <DrawerContent className="max-h-[90vh] sm:max-h-[85vh]">
+        <div className="mx-auto w-full max-w-lg px-6 overflow-y-auto no-scrollbar">
+          <DrawerHeader className="px-0 text-left pt-6 pb-4">
+            <DrawerTitle className="text-xl font-bold tracking-tight">
+              Apply for {job?.title}
+            </DrawerTitle>
+            <DrawerDescription className="text-sm">
+              Applying at <span className="font-semibold text-foreground">{job?.company?.name}</span>
+            </DrawerDescription>
+          </DrawerHeader>
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 p-4 pb-0"
-        >
-          <Input
-            type="number"
-            placeholder="Experience in years"
-            className="flex-1"
-            {...register("experience", {
-              valueAsNumber: true,
-            })}
-          />
-          {errors.experience && (
-            <p className="text-destructive text-sm">
-              {errors.experience.message}
-            </p>
-          )}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="space-y-2">
+                <Label htmlFor="experience" className="text-sm font-semibold">Experience (Years)</Label>
+                <Input
+                  id="experience"
+                  type="number"
+                  placeholder="e.g. 2"
+                  className="h-11"
+                  {...register("experience", { valueAsNumber: true })}
+                />
+                {errors.experience && (
+                  <p className="text-destructive text-xs font-medium mt-1">
+                    {errors.experience.message}
+                  </p>
+                )}
+              </div>
 
-          <Input
-            type="text"
-            placeholder="Skills (comma-separated)"
-            className="flex-1"
-            {...register("skills")}
-          />
+              <div className="space-y-2">
+                <Label htmlFor="skills" className="text-sm font-semibold">Key Skills</Label>
+                <Input
+                  id="skills"
+                  type="text"
+                  placeholder="React, CSS, etc."
+                  className="h-11"
+                  {...register("skills")}
+                />
+                {errors.skills && (
+                  <p className="text-destructive text-xs font-medium mt-1">
+                    {errors.skills.message}
+                  </p>
+                )}
+              </div>
+            </div>
 
-          {errors.skills && (
-            <p className="text-destructive text-sm">{errors.skills.message}</p>
-          )}
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold">Education Level</Label>
+              <Controller
+                name="education"
+                control={control}
+                render={({ field }) => (
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    className="flex flex-col sm:flex-row gap-3 sm:gap-6"
+                  >
+                    {["Intermediate", "Graduate", "Post Graduate"].map((level) => (
+                      <div key={level} className="flex items-center space-x-3">
+                        <RadioGroupItem value={level} id={level} className="h-5 w-5 border-2" />
+                        <Label htmlFor={level} className="text-sm font-medium cursor-pointer">
+                          {level}
+                        </Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                )}
+              />
+              {errors.education && (
+                <p className="text-destructive text-xs font-medium mt-1">
+                  {errors.education.message}
+                </p>
+              )}
+            </div>
 
-          <Controller
-            name="education"
-            control={control}
-            render={({ field }) => (
-              <RadioGroup onValueChange={field.onChange} {...field}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Intermediate" id="intermediate" />
-                  <Label htmlFor="intermediate" className="font-normal">
-                    Intermediate
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Graduate" id="graduate" />
-                  <Label className="font-normal" htmlFor="graduate">
-                    Graduate
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Post Graduate" id="post-graduate" />
-                  <Label className="font-normal" htmlFor="post-graduate">
-                    Post Graduate
-                  </Label>
-                </div>
-              </RadioGroup>
+            <div className="space-y-2">
+              <Label htmlFor="resume" className="text-sm font-semibold">Resume (PDF/DOCX)</Label>
+              <Input
+                id="resume"
+                type="file"
+                accept=".pdf, .doc, .docx"
+                className="file:mr-4 file:py-1 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold h-auto py-2"
+                {...register("resume")}
+              />
+              {errors.resume && (
+                <p className="text-destructive text-xs font-medium mt-1">
+                  {errors.resume.message}
+                </p>
+              )}
+            </div>
+
+            {errorApply?.message && (
+              <p className="text-destructive text-sm font-bold text-center bg-destructive/10 p-3 rounded-lg">
+                {errorApply?.message}
+              </p>
             )}
-          />
 
-          {errors.education && (
-            <p className="text-destructive text-sm">
-              {errors.education.message}
-            </p>
-          )}
-
-          <Input
-            type="file"
-            accept=".pdf, .doc, .docx"
-            className="flex-1 file:text-muted-foreground"
-            {...register("resume")}
-          />
-
-          {errors.resume && (
-            <p className="text-destructive text-sm">{errors.resume.message}</p>
-          )}
-
-          {errorApply?.message && (
-            <p className="text-destructive text-sm">{errorApply?.message}</p>
-          )}
-
-          {loadingApply && <BarLoader width={"100%"} color="#000000" />}
-
-          <Button
-            type="submit"
-            variant="default"
-            size="lg"
-            className="font-normal"
-          >
-            Submit application
-          </Button>
-        </form>
-
-        <DrawerFooter>
-          <DrawerClose asChild>
-            <Button className="font-normal" variant="outline">
-              Close
-            </Button>
-          </DrawerClose>
-        </DrawerFooter>
+            <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2">
+              <DrawerClose asChild>
+                <Button variant="outline" className="flex-1 h-12 text-sm font-semibold">
+                  Cancel
+                </Button>
+              </DrawerClose>
+              <Button
+                type="submit"
+                className="flex-[2] h-12 text-sm font-bold"
+                disabled={loadingApply}
+              >
+                {loadingApply ? "Submitting..." : "Submit Application"}
+              </Button>
+            </div>
+          </form>
+        </div>
       </DrawerContent>
     </Drawer>
   );

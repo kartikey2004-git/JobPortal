@@ -18,6 +18,7 @@ import useFetch from "@/hooks/UseFetch";
 import { addNewCompany } from "@/api/apiCompanies";
 import { BarLoader } from "react-spinners";
 import { useEffect } from "react";
+import { Building2, Plus, Upload } from "lucide-react";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Company name is required" }),
@@ -27,7 +28,7 @@ const schema = z.object({
       (file) =>
         file[0] &&
         (file[0].type === "image/png" || file[0].type === "image/jpeg"),
-      { message: "Please upload a valid image file" },
+      { message: "Please upload a valid PNG or JPEG image" },
     ),
 });
 
@@ -36,6 +37,7 @@ const AddCompanyDrawer = ({ fetchCompanies }) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm({
     resolver: zodResolver(schema),
   });
@@ -55,58 +57,74 @@ const AddCompanyDrawer = ({ fetchCompanies }) => {
   };
 
   useEffect(() => {
-    if (dataAddCompany?.length > 0) fetchCompanies();
+    if (dataAddCompany?.length > 0) {
+      fetchCompanies();
+      reset();
+    }
   }, [loadingAddCompany]);
 
   return (
     <Drawer>
-      <DrawerTrigger>
-        <Button className="flex justify-start" type="button" size="sm">
-          Add company
+      <DrawerTrigger asChild>
+        <Button variant="outline" type="button" size="sm" className="gap-2">
+          <Plus className="h-4 w-4" />
+          Add Company
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Add company</DrawerTitle>
-        </DrawerHeader>
+        <div className="mx-auto w-full max-w-lg">
+          <DrawerHeader>
+            <DrawerTitle className="text-2xl font-bold flex items-center gap-2">
+              <Building2 className="h-6 w-6" />
+              Register New Company
+            </DrawerTitle>
+          </DrawerHeader>
 
-        <form className="flex gap-2 p-4 pb-8">
-          <Input placeholder="Company name" {...register("name")} />
+          <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-semibold">Company Name</label>
+                <Input placeholder="e.g. Acme Corp" {...register("name")} className="h-11" />
+                {errors.name && <p className="text-sm text-destructive font-medium">{errors.name.message}</p>}
+              </div>
 
-          <Input
-            type="file"
-            accept="image/*"
-            className="file:text-muted-foreground"
-            {...register("logo")}
-          />
+              <div className="space-y-4">
+                <label className="text-sm font-semibold">Company Logo</label>
+                <div className="relative group cursor-pointer border-2 border-dashed rounded-xl p-8 transition-colors hover:bg-muted/50 border-muted">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                    {...register("logo")}
+                  />
+                  <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors">
+                    <Upload className="h-8 w-8" />
+                    <span className="text-sm font-medium">Click to upload or drag and drop</span>
+                    <span className="text-xs">PNG, JPG (max. 2MB)</span>
+                  </div>
+                </div>
+                {errors.logo && <p className="text-sm text-destructive font-medium">{errors.logo.message}</p>}
+              </div>
+            </div>
 
-          <Button
-            type="button"
-            onClick={handleSubmit(onSubmit)}
-            variant="destructive"
-            className="w-48"
-          >
-            Save
-          </Button>
-        </form>
+            {errorAddCompany?.message && (
+              <p className="text-sm text-destructive font-medium text-center">{errorAddCompany?.message}</p>
+            )}
 
-        {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+            {loadingAddCompany && <BarLoader width={"100%"} color="hsl(var(--primary))" />}
 
-        {errors.logo && <p className="text-red-500">{errors.logo.message}</p>}
-
-        {errorAddCompany?.message && (
-          <p className="text-red-500">{errorAddCompany?.message}</p>
-        )}
-
-        {loadingAddCompany && <BarLoader width={"100%"} color="#000000" />}
-
-        <DrawerFooter>
-          <DrawerClose asChild>
-            <Button variant="secondary" type="button">
-              Cancel
-            </Button>
-          </DrawerClose>
-        </DrawerFooter>
+            <div className="flex gap-4 pt-4">
+              <DrawerClose asChild>
+                <Button variant="outline" type="button" className="flex-1 h-11">
+                  Cancel
+                </Button>
+              </DrawerClose>
+              <Button type="submit" className="flex-1 h-11" disabled={loadingAddCompany}>
+                Add Company
+              </Button>
+            </div>
+          </form>
+        </div>
       </DrawerContent>
     </Drawer>
   );

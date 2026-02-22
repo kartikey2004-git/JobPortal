@@ -3,16 +3,18 @@ import BlurText from "../uiComponents/BlurText";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import ShareButton from "@/components/ui/share-button";
-import { Facebook, Link2, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Link2, Linkedin, Twitter, ArrowRight } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: (i = 1) => ({
     opacity: 1,
     y: 0,
     transition: {
+      duration: 0.5,
       delay: i * 0.1,
+      ease: [0.21, 0.47, 0.32, 0.98],
     },
   }),
 };
@@ -42,94 +44,76 @@ const shareLinks = [
 
 const HeroSection = () => {
   const { user, isLoaded } = useUser();
-
   const userRole = user?.unsafeMetadata?.role;
-  const isCandidate = userRole === "candidate";
-  const isRecruiter = userRole === "recruiter";
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 items-center px-6 sm:px-8 lg:px-16">
+    <section className="flex flex-col items-center text-center pt-0 pb-24 lg:pb-32 overflow-hidden">
       <motion.div
-        className="space-y-6 max-w-2xl"
         initial="hidden"
         animate="visible"
         variants={fadeUp}
+        custom={0}
+        className="mb-4"
       >
-        <motion.h2
-          className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight"
-          variants={fadeUp}
-          custom={0.3}
-        >
-          Find your next role
-          <br /> and get hired.
-          <br />
-        </motion.h2>
+        <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium bg-muted/50 backdrop-blur-sm">
+          Platform for professionals
+        </span>
+      </motion.div>
 
-        <motion.p
-          className="text-muted-foreground text-lg leading-relaxed"
-          variants={fadeUp}
-          custom={0.4}
-        >
+      <motion.div
+        className="space-y-8 max-w-4xl"
+        initial="hidden"
+        animate="visible"
+        variants={fadeUp}
+        custom={1}
+      >
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[1.1] text-foreground">
+          Identify your next <br />
+          <span className="text-foreground">career milestone.</span>
+        </h1>
+
+        <div className="max-w-2xl mx-auto">
           <BlurText
-            text="Browse verified opportunities, track applications, and manage your job search — all in one platform."
-            delay={150}
+            text="Access verified career opportunities, track your progress in real-time, and manage your professional journey—all from a centralized command center."
+            delay={50}
             animateBy="words"
             direction="top"
-            className="text-xl leading-relaxed"
+            className="text-lg sm:text-xl text-muted-foreground leading-relaxed"
           />
-        </motion.p>
+        </div>
 
         <motion.div
-          className="flex flex-wrap gap-4 pt-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6"
           variants={fadeUp}
-          custom={0.5}
+          custom={3}
         >
-          <div className="flex gap-4 justify-center">
-            {isLoaded && userRole ? (
-              isCandidate ? (
-                <Link to="/jobs">
-                  <Button variant="secondary" size="lg">
-                    Browse jobs
-                  </Button>
-                </Link>
-              ) : isRecruiter ? (
-                <>
-                  <Link to="/jobs">
-                    <Button variant="secondary" size="lg">
-                      Browse jobs
-                    </Button>
-                  </Link>
-
-                  <Link to="/post-job">
-                    <Button variant="secondary" size="lg">
-                      Post job
-                    </Button>
-                  </Link>
-                </>
-              ) : null
-            ) : (
-              <>
-                <Link to="/jobs">
-                  <Button variant="secondary" size="lg">
-                    Browse jobs
-                  </Button>
-                </Link>
-
-                <Link to="/post-job">
-                  <Button variant="secondary" size="lg">
-                    Post job
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
+          {isLoaded && userRole ? (
+            <Link to="/jobs">
+              <Button size="lg" className="rounded-full px-8 h-12 text-base font-medium transition-all hover:translate-y-[-2px]">
+                Browse Jobs <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          ) : (
+            <>
+              <Link to="/jobs">
+                <Button size="lg" className="rounded-full px-8 h-12 text-base font-medium transition-all hover:translate-y-[-2px]">
+                  Browse Jobs <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/post-job" className="hidden sm:block">
+                <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-base font-medium">
+                  Post a Job
+                </Button>
+              </Link>
+            </>
+          )}
 
           <ShareButton
             links={shareLinks}
-            className="bg-muted/50 text-foreground text-base font-sans first:rounded-xl border border-border backdrop-blur hover:bg-muted transition duration-200 shadow-sm"
+            className="rounded-full px-6 h-12 text-sm font-medium border border-border bg-background/50 backdrop-blur hover:bg-muted transition-all shadow-sm"
           >
-            <Link size={15} />
-            Share platform
+            <Link2 className="h-4 w-4 mr-2" />
+            Share Platform
           </ShareButton>
         </motion.div>
       </motion.div>
@@ -138,3 +122,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+

@@ -9,18 +9,18 @@ import {
 } from "@clerk/clerk-react";
 import { BriefcaseBusiness, Heart, PenBox } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ModeToggle } from "./ModeToggle";
 
 const Header = () => {
   const [search, setSearch] = useSearchParams();
   const { user } = useUser();
+  const [showSignIn, setShowSignIn] = useState(false);
 
   useEffect(() => {
     if (search.get("sign-in")) {
       setShowSignIn(true);
     }
   }, [search]);
-
-  const [showSignIn, setShowSignIn] = useState(false);
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -31,28 +31,35 @@ const Header = () => {
 
   return (
     <>
-      <nav className="py-6 flex justify-between items-center border-b border-border/50 bg-background/95 backdrop-blur-sm sticky top-0 z-40">
-        <Link>
-          <h1 className="text-2xl md:text-3xl font-semibold cursor-pointer tracking-tight hover:text-primary transition-colors duration-150">
+      <nav className="flex justify-between items-center py-3 px-6 border-b bg-background/80 backdrop-blur-md sticky top-0 z-50 transition-all">
+        <Link to="/" className="flex items-center gap-2">
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight">
             JobConnect
           </h1>
         </Link>
-        <div className="flex gap-8">
+        <div className="flex items-center gap-4">
+          <ModeToggle />
+
           <SignedOut>
             <Button
               onClick={() => setShowSignIn(true)}
               variant="outline"
-              className=""
+              size="sm"
+              className="font-medium"
             >
-              Sign in
+              Log in
             </Button>
           </SignedOut>
 
           <SignedIn>
             {user?.unsafeMetadata?.role === "recruiter" && (
               <Link to="/post-job">
-                <Button variant="destructive" className="rounded-full">
-                  <PenBox size={20} className="mr-2" />
+                <Button variant="default" size="sm" className="hidden sm:flex gap-2">
+                  <PenBox className="h-4 w-4" />
+                  Post Job
+                </Button>
+                <Button variant="default" size="icon" className="sm:hidden rounded-full h-8 w-8">
+                  <PenBox className="h-4 w-4" />
                 </Button>
               </Link>
             )}
@@ -60,32 +67,22 @@ const Header = () => {
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "w-10 h-10",
+                  avatarBox: "h-9 w-9 border border-border hover:opacity-80 transition-opacity",
+                  userButtonPopoverMain: "border border-border shadow-xl",
                 },
               }}
             >
               <UserButton.MenuItems>
-                {user?.unsafeMetadata?.role === "candidate" ? (
-                  <UserButton.Link
-                    label="Applications"
-                    labelIcon={<BriefcaseBusiness size={15} />}
-                    href="/my-jobs"
-                  ></UserButton.Link>
-                ) : (
-                  <UserButton.Link
-                    label="Posted Jobs"
-                    labelIcon={<BriefcaseBusiness size={15} />}
-                    href="/my-jobs"
-                  ></UserButton.Link>
-                )}
-              </UserButton.MenuItems>
-
-              <UserButton.MenuItems>
+                <UserButton.Link
+                  label={user?.unsafeMetadata?.role === "candidate" ? "My Applications" : "Posted Jobs"}
+                  labelIcon={<BriefcaseBusiness className="h-4 w-4" />}
+                  href="/my-jobs"
+                />
                 <UserButton.Link
                   label="Saved Jobs"
-                  labelIcon={<Heart size={15} />}
+                  labelIcon={<Heart className="h-4 w-4" />}
                   href="/saved-jobs"
-                ></UserButton.Link>
+                />
               </UserButton.MenuItems>
             </UserButton>
           </SignedIn>
@@ -95,9 +92,9 @@ const Header = () => {
       {showSignIn && (
         <div
           onClick={handleOverlayClick}
-          className="fixed inset-0 z-50 flex justify-center items-center bg-black/10 backdrop-blur-sm overflow-auto transition-opacity duration-200"
+          className="fixed inset-0 z-[100] flex justify-center items-center bg-background/80 backdrop-blur-sm animate-in fade-in duration-200"
         >
-          <div className="p-4 rounded-xl max-w-md w-full">
+          <div className="animate-in zoom-in-95 duration-200">
             <SignIn
               signUpForceRedirectUrl="/onboarding"
               fallbackRedirectUrl="/onboarding"
@@ -110,3 +107,4 @@ const Header = () => {
 };
 
 export default Header;
+

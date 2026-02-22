@@ -4,13 +4,12 @@ import { useUser } from "@clerk/clerk-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BarLoader } from "react-spinners";
-import { BriefcaseBusinessIcon, Users } from "lucide-react";
+import { User, Briefcase } from "lucide-react";
 
 const Onboarding = () => {
   const { user, isLoaded } = useUser();
   const navigate = useNavigate();
 
-  // Handle role selection and update user metadata
   const handleRoleSelection = async (role) => {
     await user
       .update({
@@ -24,7 +23,6 @@ const Onboarding = () => {
       });
   };
 
-  // Navigate to respective page based on role
   useEffect(() => {
     if (user?.unsafeMetadata?.role) {
       navigate(
@@ -34,70 +32,65 @@ const Onboarding = () => {
   }, [user]);
 
   if (!isLoaded) {
-    return <BarLoader className="mb-4" width={"100%"} color="#000000" />;
+    return <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />;
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex flex-col items-center justify-center px-4 sm:px-8 lg:px-16 -mt-20">
-      <div className="w-full max-w-3xl">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">
-            Welcome to
-            <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              {" "}
-              JobConnect
-            </span>
+    <div className="flex flex-col items-center pt-16 md:pt-32 px-4 pb-20">
+      <div className="w-full max-w-2xl bg-card border rounded-3xl p-8 md:p-12 shadow-sm">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight mb-4">
+            Welcome to JobConnect
           </h1>
-          <p className="text-lg text-muted-foreground mb-2">
-            Choose your journey
+          <p className="text-muted-foreground text-lg max-w-md mx-auto">
+            To get started, please tell us how you'll be using the platform.
           </p>
-          <h2 className="text-2xl md:text-3xl font-semibold text-foreground">
-            I am a...
-          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="group relative">
-            <Button
-              className="relative h-24 w-full text-sm font-medium bg-background border border-primary/20 hover:border-primary/40 shadow-md  transition-all duration-300 hover:scale-[1.01] rounded-xl flex flex-col gap-2"
-              variant="outline"
-              onClick={() => handleRoleSelection("candidate")}
-            >
-              <Users className="w-6 h-6 text-primary" />
-              <div className="text-left">
-                <div className="text-base font-semibold">Candidate</div>
-                <div className="text-xs text-muted-foreground">
-                  Find your dream job
-                </div>
-              </div>
-            </Button>
-          </div>
+          <Button
+            variant="outline"
+            className="h-auto flex-col items-start p-8 text-left hover:border-primary hover:bg-primary/[0.02] transition-all rounded-2xl gap-6 border-2 group"
+            onClick={() => handleRoleSelection("candidate")}
+          >
+            <div className="h-14 w-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+              <User className="h-7 w-7" />
+            </div>
+            <div className="space-y-2">
+              <div className="text-xl font-bold">I'm a Candidate</div>
+              <p className="text-sm text-muted-foreground leading-relaxed whitespace-normal">
+                I want to find and apply for my next career opportunity with ease.
+              </p>
+            </div>
+          </Button>
 
-          <div className="group relative">
-            <Button
-              className="relative h-24 w-full text-sm font-medium bg-background border border-secondary/20 hover:border-secondary/40 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.01] rounded-xl flex flex-col gap-2"
-              variant="outline"
-              onClick={() => handleRoleSelection("recruiter")}
-            >
-              <BriefcaseBusinessIcon className="w-6 h-6 text-primary" />
-              <div className="text-left">
-                <div className="text-base font-semibold">Recruiter</div>
-                <div className="text-xs text-muted-foreground">
-                  Post job opportunities
-                </div>
-              </div>
-            </Button>
-          </div>
+          <Button
+            variant="outline"
+            className="h-auto flex-col items-start p-8 text-left hover:border-primary hover:bg-primary/[0.02] transition-all rounded-2xl gap-6 border-2 group"
+            onClick={() => handleRoleSelection("recruiter")}
+          >
+            <div className="h-14 w-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+              <Briefcase className="h-7 w-7" />
+            </div>
+            <div className="space-y-2">
+              <div className="text-xl font-bold">I'm a Recruiter</div>
+              <p className="text-sm text-muted-foreground leading-relaxed whitespace-normal">
+                I want to post jobs and find the best talent for my growing team.
+              </p>
+            </div>
+          </Button>
         </div>
 
-        <div className="mt-8 text-center">
-          <p className="text-xs text-muted-foreground">
-            Join thousands of professionals already using JobConnect
+        <div className="mt-12 pt-8 border-t text-center">
+          <p className="text-sm text-muted-foreground">
+            You can always change your preferences in your profile settings later.
           </p>
         </div>
       </div>
     </div>
   );
+
 };
 
 export default Onboarding;
+

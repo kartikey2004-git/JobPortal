@@ -5,6 +5,9 @@ import { useUser } from "@clerk/clerk-react";
 import { useEffect } from "react";
 import { BarLoader } from "react-spinners";
 import ApplicationCard from "./ApplicationCard";
+import { FileText } from "lucide-react";
+import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 
 const CreatedApplications = () => {
   const { user } = useUser();
@@ -22,7 +25,7 @@ const CreatedApplications = () => {
   }, []);
 
   if (loadingApplications) {
-    return <BarLoader className="mb-4" width={"100%"} color="#000000" />;
+    return <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />;
   }
 
   return (
@@ -36,8 +39,19 @@ const CreatedApplications = () => {
           />
         ))
       ) : (
-        <div className="col-span-full text-center py-12">
-          <p className="text-muted-foreground">No applications found</p>
+        <div className="col-span-full flex flex-col items-center justify-center py-24 text-center border-2 border-dashed rounded-3xl bg-muted/5">
+          <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-6 text-muted-foreground">
+            <FileText size={32} />
+          </div>
+          <h3 className="text-2xl font-bold mb-3">No applications yet</h3>
+          <p className="text-muted-foreground max-w-sm mb-8 text-lg">
+            You haven't applied to any jobs yet. Start your journey by exploring available positions.
+          </p>
+          <Link to="/jobs">
+            <Button size="lg" className="rounded-full px-8">
+              Explore Jobs
+            </Button>
+          </Link>
         </div>
       )}
     </div>
@@ -45,3 +59,4 @@ const CreatedApplications = () => {
 };
 
 export default CreatedApplications;
+
