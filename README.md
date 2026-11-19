@@ -23,7 +23,7 @@ JobConnect is a job portal web application built with **React.js**, **JavaScript
 
 ##  Key Features
 
-**✨ Features**
+**Features**
 
 - Role-based access for Candidates and Recruiters
 
@@ -79,7 +79,7 @@ The Job Portal follows a frontend-heavy architecture, using Supabase for backend
 - Responsive design and layout animations (Tailwind + Framer Motion if used)
 ---
 
-## 🚀 Getting Started Locally
+## Getting Started Locally
 
 ### Clone the repo:
 ```bash
@@ -108,7 +108,7 @@ npm run dev
 ```
 
 
-🗂️ Folder Structure
+Folder Structure
 ```php
 JOBCONNECT
 ├── .git
