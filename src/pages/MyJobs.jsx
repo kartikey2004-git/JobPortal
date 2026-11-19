@@ -1,36 +1,27 @@
-import CreatedApplications from "@/components/CreatedApplications";
-import CreatedJobs from "@/components/CreatedJobs";
-import { useUser } from "@clerk/clerk-react";
-import { BarLoader } from "react-spinners";
+import PageHeader from "@/components/shared/PageHeader";
+import PageSkeleton from "@/components/shared/PageSkeleton";
+import MyApplications from "@/features/applications/MyApplications";
+import MyPostedJobs from "@/features/jobs/MyPostedJobs";
+import useUserRole from "@/hooks/useUserRole";
 
 const MyJobs = () => {
-  const { isLoaded, user } = useUser();
+  const { isLoaded, isCandidate } = useUserRole();
 
-  if (!isLoaded) {
-    return <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />;
-  }
-
-  const isCandidate = user?.unsafeMetadata?.role === "candidate";
+  if (!isLoaded) return <PageSkeleton />;
 
   return (
-    <div className="space-y-10 pt-10 pb-20">
-      <div className="flex flex-col gap-4 text-center md:text-left">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-          {isCandidate ? "My Applications" : "My Job Listings"}
-        </h1>
-        <p className="text-muted-foreground text-lg max-w-2xl">
-          {isCandidate
+    <div className="page-shell">
+      <PageHeader
+        title={isCandidate ? "Applications" : "Listings"}
+        description={
+          isCandidate
             ? "Track and manage all your job applications in one place."
-            : "Manage your active job postings and review incoming talent."}
-        </p>
-      </div>
-
-      <div className="pt-4">
-        {isCandidate ? <CreatedApplications /> : <CreatedJobs />}
-      </div>
+            : "Manage your active job postings and review incoming talent."
+        }
+      />
+      {isCandidate ? <MyApplications /> : <MyPostedJobs />}
     </div>
   );
 };
 
 export default MyJobs;
-

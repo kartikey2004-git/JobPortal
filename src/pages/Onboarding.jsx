@@ -1,96 +1,77 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { Button } from "@/components/ui/button";
-import { useUser } from "@clerk/clerk-react";
+import { Briefcase, User } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { BarLoader } from "react-spinners";
-import { User, Briefcase } from "lucide-react";
+import PageHeader from "@/components/shared/PageHeader";
+import PageSkeleton from "@/components/shared/PageSkeleton";
+import { ROLES, ROUTES } from "@/config/constants";
+import useUserRole from "@/hooks/useUserRole";
+
+const ROLE_OPTIONS = [
+  {
+    role: ROLES.CANDIDATE,
+    icon: User,
+    title: "I'm a candidate",
+    description: "I want to find and apply for my next career opportunity with ease.",
+  },
+  {
+    role: ROLES.RECRUITER,
+    icon: Briefcase,
+    title: "I'm a recruiter",
+    description: "I want to post jobs and find the best talent for my growing team.",
+  },
+];
+
+const homeRouteFor = (role) => (role === ROLES.RECRUITER ? ROUTES.POST_JOB : ROUTES.JOBS);
 
 const Onboarding = () => {
-  const { user, isLoaded } = useUser();
+  const { user, role, isLoaded } = useUserRole();
   const navigate = useNavigate();
 
-  const handleRoleSelection = async (role) => {
-    await user
-      .update({
-        unsafeMetadata: { role },
-      })
-      .then(() => {
-        navigate(role === "recruiter" ? "/post-job" : "/jobs");
-      })
-      .catch((err) => {
-        console.error("Error updating role:", err);
-      });
+  // Users who already chose a role skip onboarding.
+  useEffect(() => {
+    if (role) navigate(homeRouteFor(role));
+  }, [role, navigate]);
+
+  const handleRoleSelection = async (selectedRole) => {
+    try {
+      await user.update({ unsafeMetadata: { role: selectedRole } });
+      navigate(homeRouteFor(selectedRole));
+    } catch (error) {
+      console.error("Error updating role:", error);
+    }
   };
 
-  useEffect(() => {
-    if (user?.unsafeMetadata?.role) {
-      navigate(
-        user?.unsafeMetadata?.role === "recruiter" ? "/post-job" : "/jobs",
-      );
-    }
-  }, [user]);
-
-  if (!isLoaded) {
-    return <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />;
-  }
+  if (!isLoaded) return <PageSkeleton count={2} />;
 
   return (
-    <div className="flex flex-col items-center pt-16 md:pt-32 px-4 pb-20">
-      <div className="w-full max-w-2xl bg-card border rounded-3xl p-8 md:p-12 shadow-sm">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight mb-4">
-            Welcome to JobConnect
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-md mx-auto">
-            To get started, please tell us how you'll be using the platform.
-          </p>
-        </div>
+    <div className="page-shell">
+      <PageHeader
+        title="Welcome"
+        description="To get started, tell us how you'll be using the platform."
+      />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Button
-            variant="outline"
-            className="h-auto flex-col items-start p-8 text-left hover:border-primary hover:bg-primary/[0.02] transition-all rounded-2xl gap-6 border-2 group"
-            onClick={() => handleRoleSelection("candidate")}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {ROLE_OPTIONS.map(({ role: optionRole, icon: Icon, title, description }) => (
+          <button
+            key={optionRole}
+            type="button"
+            onClick={() => handleRoleSelection(optionRole)}
+            className="surface group flex cursor-pointer flex-col items-start gap-4 p-5 text-left transition-colors duration-150 hover:border-border hover:bg-accent/40 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
           >
-            <div className="h-14 w-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-              <User className="h-7 w-7" />
-            </div>
-            <div className="space-y-2">
-              <div className="text-xl font-bold">I'm a Candidate</div>
-              <p className="text-sm text-muted-foreground leading-relaxed whitespace-normal">
-                I want to find and apply for my next career opportunity with ease.
-              </p>
-            </div>
-          </Button>
-
-          <Button
-            variant="outline"
-            className="h-auto flex-col items-start p-8 text-left hover:border-primary hover:bg-primary/[0.02] transition-all rounded-2xl gap-6 border-2 group"
-            onClick={() => handleRoleSelection("recruiter")}
-          >
-            <div className="h-14 w-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-              <Briefcase className="h-7 w-7" />
-            </div>
-            <div className="space-y-2">
-              <div className="text-xl font-bold">I'm a Recruiter</div>
-              <p className="text-sm text-muted-foreground leading-relaxed whitespace-normal">
-                I want to post jobs and find the best talent for my growing team.
-              </p>
-            </div>
-          </Button>
-        </div>
-
-        <div className="mt-12 pt-8 border-t text-center">
-          <p className="text-sm text-muted-foreground">
-            You can always change your preferences in your profile settings later.
-          </p>
-        </div>
+            <Icon className="size-4 text-foreground/70 transition-colors group-hover:text-foreground" />
+            <span className="space-y-1">
+              <span className="block text-sm font-medium text-foreground sm:text-base">{title}</span>
+              <span className="block body-text">{description}</span>
+            </span>
+          </button>
+        ))}
       </div>
+
+      <p className="mt-8 text-sm text-muted-foreground">
+        You can always change your preferences in your profile settings later.
+      </p>
     </div>
   );
-
 };
 
 export default Onboarding;
-

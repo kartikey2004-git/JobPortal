@@ -1,0 +1,43 @@
+/* Adapters that make third-party widgets follow the design tokens. */
+
+/*
+ * @uiw/react-md-editor: render markdown on the page background in the
+ * surrounding text color. Scoped under `.markdown-content`
+ * (components/shared/MarkdownContent.jsx) to out-rank the library defaults
+ * without `!important`.
+ */
+.markdown-content .wmde-markdown {
+  background-color: transparent;
+  color: inherit;
+  font-family: var(--font-geist-sans);
+  font-size: var(--text-base);
+}
+
+.markdown-content .wmde-markdown ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+/*
+ * Browsers paint autofilled inputs with their own background using an
+ * !important inline style, so `!important` is the only way to override it.
+ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--background) inset !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/*
+ * Clerk sets its own local `--border` and `--accent` custom properties on its elements, which
+ * shadow the app's tokens there (menu hover states turned slate-grey, borders turned black).
+ * These aliases are resolved on :root, where the tokens are still the app's values, and are used
+ * for those two colors in Clerk classes (lib/clerk-appearance.js).
+ */
+:root {
+  --app-border: var(--border);
+  --app-accent: var(--accent);
+}
