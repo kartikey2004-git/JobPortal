@@ -7,7 +7,7 @@ JobConnect is a job portal web application built with **React.js**, **JavaScript
 
 ## Preview
 
-**Live Site** → [https://jobconnectx.vercel.app](https://jobconnectx.vercel.app/)  
+**Live Site** → [https://job-connectx.vercel.app](https://job-connectx.vercel.app/)  
 **Repo** → [https://github.com/kartikey2004-git/JobPortal](https://github.com/kartikey2004-git/JobPortal)
 
 ---
